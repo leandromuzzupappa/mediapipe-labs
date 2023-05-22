@@ -1,25 +1,14 @@
 import { LitElement, html } from "lit";
-import { customElement, query } from "lit/decorators.js";
-import { cameraStream } from "../hooks/camera-stream";
+import { customElement } from "lit/decorators.js";
+
+import "../components/mediapipe-component/mediapipe-component";
 
 @customElement("app-root")
 export class AppRoot extends LitElement {
-  @query(".pepitos-video") video!: HTMLVideoElement;
-
-  async firstUpdated() {
-    await cameraStream({
-      video: this.video,
-      constraints: {
-        audio: false,
-        video: { width: 1280, height: 720 },
-      },
-    });
-  }
-
   render() {
     return html`
-      <h1>Pepitos!</h1>
-      <video class="pepitos-video"></video>
+      <h1>Pepitos sss!</h1>
+      <mediapipe-component></mediapipe-component>
     `;
   }
 }
