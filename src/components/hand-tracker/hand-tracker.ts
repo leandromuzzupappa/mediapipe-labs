@@ -146,7 +146,6 @@ export class HandTracker extends LitElement {
 
   handleLandmark(landmarks: any) {
     this.flipLandmarks(landmarks);
-    this.getLandmarkPositionOnScreen(landmarks);
 
     //console.log(this.detections.landmarks);
     const indexPosition =
@@ -175,17 +174,6 @@ export class HandTracker extends LitElement {
         (this.video.videoWidth - landmark.x * this.video.videoWidth) /
         this.video.videoWidth;
     }
-  }
-
-  getLandmarkPositionOnScreen(landmarks: any) {
-    /* for (let landmark of landmarks) {
-      console.log("screen", {
-        width: (landmark.x * window.innerWidth).toFixed(2),
-        height: (landmark.y * window.innerHeight).toFixed(2),
-        screenX: window.innerWidth,
-        screenY: window.innerHeight,
-      });
-    } */
   }
 
   userClickWithItsFingers(indexPosition: any, thubmPosition: any) {
