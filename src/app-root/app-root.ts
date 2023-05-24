@@ -1,7 +1,6 @@
 import { LitElement, html } from "lit";
 import { customElement } from "lit/decorators.js";
 
-import "../components/mediapipe-component/mediapipe-component";
 import "../components/hand-tracker/hand-tracker";
 
 @customElement("app-root")
