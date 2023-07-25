@@ -132,16 +132,21 @@ export class HandTracker extends LitElement {
         this.handleLandmark(landmarks);
       }
 
-      drawConnectors(this.ctx, landmarks, HAND_CONNECTIONS, {
-        color: "#00FF00",
-        lineWidth: 2,
-      });
-      drawLandmarks(this.ctx, landmarks, {
-        color: "#FF0000",
-        lineWidth: 1,
-        fillColor: "#FF0000",
-        radius: 2,
-      });
+      if (!landmarks) return;
+
+      //if drawConnectors exists, draw the lines
+      if (drawConnectors) {
+        drawConnectors(this.ctx, landmarks, HAND_CONNECTIONS, {
+          color: "#00FF00",
+          lineWidth: 2,
+        });
+        drawLandmarks(this.ctx, landmarks, {
+          color: "#FF0000",
+          lineWidth: 1,
+          fillColor: "#FF0000",
+          radius: 2,
+        });
+      }
     }
 
     this.ctx.restore();
