@@ -167,6 +167,8 @@ export class HandTracker extends LitElement {
 
   flipLandmarks(landmarks: any) {
     for (let landmark of landmarks) {
+      console.log(landmark);
+
       /* console.log("video", {
         video: this.video.videoWidth,
         lm: landmark.x,
