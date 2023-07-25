@@ -61,8 +61,9 @@ export class HandTracker extends LitElement {
   async firstUpdated() {
     this.setupCanvas();
 
-    await this.setupCamera();
+    await this.updateComplete;
     await this.setupHandLandMarker();
+    await this.setupCamera();
   }
 
   async setupCamera() {
@@ -82,6 +83,11 @@ export class HandTracker extends LitElement {
     this.canvas.height = this.video.videoHeight;
     this.canvas.style.width = `${this.video.videoWidth}px`;
     this.canvas.style.height = `${this.video.videoHeight}px`; */
+
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+    this.canvas.style.width = `${window.innerWidth}px`;
+    this.canvas.style.height = `${window.innerHeight}px`;
 
     this.ctx = this.canvas.getContext("2d");
   }
@@ -108,7 +114,7 @@ export class HandTracker extends LitElement {
 
   startTracking = async () => {
     if (this.video.currentTime !== this.lastVideoTime) {
-      this.detections = this.handLandmarker.detectForVideo(
+      this.detections = await this.handLandmarker.detectForVideo(
         this.video,
         performance.now()
       );
@@ -169,10 +175,9 @@ export class HandTracker extends LitElement {
           (this.video.videoWidth - landmark.x * this.video.videoWidth) /
           this.video.videoWidth,
       }); */
-
-      landmark.x =
+      /* landmark.x =
         (this.video.videoWidth - landmark.x * this.video.videoWidth) /
-        this.video.videoWidth;
+        this.video.videoWidth; */
     }
   }
 
@@ -182,11 +187,13 @@ export class HandTracker extends LitElement {
         Math.pow(indexPosition.y - thubmPosition.y, 2)
     );
 
-    /* console.log("distance", distance); */
-
     const now = new Date().getTime();
     const cooldown = 1000;
     const lastClick = localStorage.getItem("lastClick");
+
+    const scale = Math.min(1 - distance * 40, 1);
+
+    this.ball.style.scale = `${scale}`;
 
     if (lastClick && now - parseInt(lastClick) < cooldown) return;
 
@@ -198,13 +205,12 @@ export class HandTracker extends LitElement {
   }
 
   moveBall(landmark: any) {
-    const x = ((landmark.x * window.innerWidth) / window.innerWidth) * 3 - 1;
-    const y = ((landmark.y * window.innerHeight) / window.innerHeight) * 3 - 1;
+    const x = landmark.x * window.innerWidth;
+    const y = landmark.y * window.innerHeight;
 
-    const newx = x * window.innerWidth;
-    const newy = y * window.innerHeight;
+    console.log("x", x, "y", y);
 
-    this.ball.style.transform = `translate(${newx}px, ${newy}px)`;
+    this.ball.style.translate = `${x - 400}px ${y - 400}px`;
 
     this.handleBallOutsideCanvas();
   }

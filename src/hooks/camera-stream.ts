@@ -10,7 +10,7 @@ export const cameraStream = async ({
   try {
     const stream = await navigator.mediaDevices.getUserMedia(constraints);
     video.srcObject = stream;
-    video.style.transform = "scaleX(-1)";
+    /* video.style.transform = "scaleX(-1)"; */
     video.onloadedmetadata = () => video.play();
     return stream;
   } catch (error) {
